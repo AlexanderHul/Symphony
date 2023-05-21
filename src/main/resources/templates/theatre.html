@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${theatre.getName()}"></title>
+</head>
+<body>
+<h1>Theater Information</h1>
+<a th:href="@{'~/theatre/'+${theatreId}+'/show'}">Show comming performances</a>
+
+<div>
+    <h2 th:text="${theatre.getName()}"></h2>
+    <p th:text="'Address: '+${theatre.getAddress()}+', '+${theatre.getCity()}"></p>
+    <form th:action="@{'~/theatre/'+${theatreId}}" method="post">
+        <label>
+            <textarea name="description" th:text="${theatre.getDescription()}"></textarea>
+        </label>
+        <button type="submit">Update</button>
+    </form>
+</div>
+</body>
+</html>

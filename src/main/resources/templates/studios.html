@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Studios</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="studio : ${studios}">
+        <td><a th:text="${studio.getName()}" th:href="@{'~/studio/'+${studio.getId()}}"></a></td>
+        <td th:text="${studio.getDescription()}"></td>
+        <td>
+            <form method="post" th:action="@{'~/studio/delete/'+${studio.getId()}}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <form th:action="@{~/studio/create}" method="post">
+            <td><input name="name" type="text" required/></td>
+            <td><input name="description" type="text" required/></td>
+            <td>
+                <button type="submit">Create</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Shows</title>
+
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+<h1 th:text="${filterMessage}"></h1>
+<table>
+  <thead>
+  <tr>
+    <th></th>
+    <th>Theatre</th>
+    <th>Studio</th>
+    <th>Performance</th>
+    <th>Date</th>
+    <th>Price</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="show : ${theatrePerformances}">
+    <td><a th:href="@{'~/show/'+${show.getId()}}">Open</a></td>
+    <td><a th:text="${show.getTheatre().getName()}" th:href="@{'~/theatre/'+${show.getTheatre().getId()}}"></a></td>
+    <td><a th:text="${show.getStudio().getName()}" th:href="@{'~/studio/'+${show.getStudio().getId()}}"></a></td>
+    <td><a th:text="${show.getPerformance().getName()}" th:href="@{'~/perform/'+${show.getPerformance().getId()}}"></a></td>
+    <td th:text="${show.getPerformDate()}"></td>
+    <td th:text="${show.getPrice()}"></td>
+    <td>
+      <form method="post" th:action="@{'~/show/delete/'+${show.getId()}}">
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  <tr th:if="${updatable}">
+    <form th:action="@{~/show/create}" method="post">
+      <td></td>
+      <td>
+        <select name="theatreId">
+          <option th:each="theatre : ${theatres}" th:value="${theatre.getId()}" th:text="${theatre.getName()}"></option>
+        </select>
+      </td>
+      <td>
+        <select name="studioId">
+          <option th:each="studio : ${studios}" th:value="${studio.getId()}" th:text="${studio.getName()}"></option>
+        </select>
+      </td>
+      <td>
+        <select name="performanceId">
+          <option th:each="perform : ${performs}" th:value="${perform.getId()}" th:text="${perform.getName()}"></option>
+        </select>
+      </td>
+      <td><input name="performDate" type="date" required/></td>
+      <td><input name="price" type="text" required/></td>
+      <td>
+        <button type="submit">Create</button>
+      </td>
+    </form>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

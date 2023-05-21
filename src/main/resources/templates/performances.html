@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Performances</title>
+
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Duration (min.)</th>
+    <th>Author</th>
+    <th>Description</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="performance : ${performances}">
+    <td><a th:text="${performance.getName()}" th:href="@{'~/perform/'+${performance.getId()}}"></a></td>
+    <td th:text="${performance.getDuration()}"></td>
+    <td><a th:text="${performance.getAuthor().getName()}" th:href="@{'~/author/'+${performance.getAuthor().getId()}}"></a></td>
+    <td th:text="${performance.getDescription()}"></td>
+    <td>
+      <form method="post" th:action="@{'~/perform/delete/'+${performance.getId()}}">
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <form th:action="@{~/perform/create}" method="post">
+      <td><input name="name" type="text" required/></td>
+      <td><input name="duration" type="number" required/></td>
+      <td>
+        <select name="authorId">
+          <option th:each="author : ${authors}" th:value="${author.getId()}" th:text="${author.getName()}"></option>
+        </select>
+      </td>
+      <td><input name="description" type="text" required/></td>
+      <td>
+        <button type="submit">Create</button>
+      </td>
+    </form>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

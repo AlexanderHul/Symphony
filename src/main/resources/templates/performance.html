@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${performance.getName()}"></title>
+</head>
+<body>
+<h1>Performance Information</h1>
+
+<div>
+  <h2 th:text="${performance.getName()}"></h2>
+  <a th:text="'Author: '+${performance.getAuthor().getName()}" th:href="@{'~/author/'+${performance.getAuthor().getId()}}"></a>
+  <p th:text="${performance.getDuration()}+' min'"></p>
+  <form th:action="@{'~/perform/'+${performId}}" method="post">
+    <label>
+      <textarea name="description" th:text="${performance.getDescription()}"></textarea>
+    </label>
+    <button type="submit">Update</button>
+  </form>
+</div>
+</body>
+</html>

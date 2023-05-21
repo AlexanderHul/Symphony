@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${studio.getName()}"></title>
+</head>
+<body>
+<h1>Studio Information</h1>
+
+<div>
+    <h2 th:text="${studio.getName()}"></h2>
+    <div>
+        <h3>Social Links: </h3>
+        <th:block th:each="link : ${studio.getStudioLinks()}">
+            <a th:href="${link.link}" th:text="${link.link}"></a><br>
+        </th:block>
+        <th:block>
+            <form th:action="@{'~/studio/'+${studioId}+'/create'}" method="post">
+                <label>
+                    <input name="link" type="text">
+                </label>
+                <button type="submit">Create</button>
+            </form>
+        </th:block>
+    </div>
+    <form th:action="@{'~/studio/'+${studioId}}" method="post">
+        <label>
+            <textarea name="description" th:text="${studio.getDescription()}"></textarea>
+        </label>
+        <button type="submit">Update</button>
+    </form>
+</div>
+</body>
+</html>

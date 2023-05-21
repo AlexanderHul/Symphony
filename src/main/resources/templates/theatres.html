@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Theatres</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="theatre : ${theatres}">
+        <td><a th:text="${theatre.getName()}" th:href="@{'~/theatre/'+${theatre.getId()}}"></a></td>
+        <td th:text="${theatre.getAddress()}"></td>
+        <td th:text="${theatre.getCity()}"></td>
+        <td th:text="${theatre.getDescription()}"></td>
+        <td>
+            <form method="post" th:action="@{'~/theatre/delete/'+${theatre.getId()}}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <form th:action="@{~/theatre/create}" method="post">
+            <td><input name="name" type="text" required/></td>
+            <td><input name="address" type="text" required/></td>
+            <td><input name="city" type="text" required/></td>
+            <td><input name="description" type="text" required/></td>
+            <td>
+                <button type="submit">Create</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
